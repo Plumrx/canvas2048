@@ -19,19 +19,6 @@ function restart () {
       data[i][j] = 0;
     }
   }
-  // data = [
-  //   [0, 2, 2, 2],
-  //   [2, 0, 0, 2],
-  //   [0, 2, 2, 2],
-  //   [2, 0, 2, 2]
-  // ];
-
-  let dataResult = [
-    [4, 4, 4, 4],
-    [0, 0, 2, 4],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0]
-  ];
 
   score = 0;
 
@@ -87,6 +74,7 @@ function isGameover () {
 
 // 移动卡片
 function move (direction) {
+  let mc = 0;
   switch (direction) {
     case 8:
       // 向上滑动
@@ -96,14 +84,16 @@ function move (direction) {
             if (data[i][j] == 0) {
               if (data[i + 1][j] != 0) {
                 [data[i][j], data[i + 1][j]] = [data[i + 1][j], data[i][j]];
+                mc++;
               }
             }
           }
         }
         for (let i = 0; i < n - 1; i++) {
-          if (data[i][j] == data[i + 1][j]) {
+          if (data[i][j] == data[i + 1][j] && data[i][j] != 0) {
             data[i][j] = 2 * data[i + 1][j];
             data[i + 1][j] = 0;
+            mc++;
           }
         }
         for (let s = 0; s < n - 1; s++) {
@@ -111,6 +101,7 @@ function move (direction) {
             if (data[i][j] == 0) {
               if (data[i + 1][j] != 0) {
                 [data[i][j], data[i + 1][j]] = [data[i + 1][j], data[i][j]];
+                mc++;
               }
             }
           }
@@ -125,14 +116,16 @@ function move (direction) {
             if (data[i][j] == 0) {
               if (data[i - 1][j] != 0) {
                 [data[i][j], data[i - 1][j]] = [data[i - 1][j], data[i][j]];
+                mc++;
               }
             }
           }
         }
         for (let i = n - 1; i > 0; i--) {
-          if (data[i][j] == data[i - 1][j]) {
+          if (data[i][j] == data[i - 1][j] && data[i][j] != 0) {
             data[i][j] *= 2;
             data[i - 1][j] = 0;
+            mc++;
           }
         }
         for (let s = 0; s < n - 1; s++) {
@@ -140,6 +133,7 @@ function move (direction) {
             if (data[i][j] == 0) {
               if (data[i - 1][j] != 0) {
                 [data[i][j], data[i - 1][j]] = [data[i - 1][j], data[i][j]];
+                mc++;
               }
             }
           }
@@ -154,14 +148,16 @@ function move (direction) {
             if (data[i][j] == 0) {
               if (data[i][j + 1] != 0) {
                 [data[i][j], data[i][j + 1]] = [data[i][j + 1], data[i][j]];
+                mc++;
               }
             }
           }
         }
         for (let j = 0; j < n - 1; j++) {
-          if (data[i][j] == data[i][j + 1]) {
+          if (data[i][j] == data[i][j + 1] && data[i][j] != 0) {
             data[i][j] = 2 * data[i][j + 1];
             data[i][j + 1] = 0;
+            mc++;
           }
         }
         for (let s = 0; s < n - 1; s++) {
@@ -169,6 +165,7 @@ function move (direction) {
             if (data[i][j] == 0) {
               if (data[i][j + 1] != 0) {
                 [data[i][j], data[i][j + 1]] = [data[i][j + 1], data[i][j]];
+                mc++;
               }
             }
           }
@@ -183,14 +180,16 @@ function move (direction) {
             if (data[i][j] == 0) {
               if (data[i][j - 1] != 0) {
                 [data[i][j], data[i][j - 1]] = [data[i][j - 1], data[i][j]];
+                mc++;
               }
             }
           }
         }
         for (let j = n - 1; j > 0; j--) {
-          if (data[i][j] == data[i][j - 1]) {
+          if (data[i][j] == data[i][j - 1] && data[i][j] != 0) {
             data[i][j] *= 2;
             data[i][j - 1] = 0;
+            mc++;
           }
         }
         for (let s = 0; s < n - 1; s++) {
@@ -198,6 +197,7 @@ function move (direction) {
             if (data[i][j] == 0) {
               if (data[i][j - 1] != 0) {
                 [data[i][j], data[i][j - 1]] = [data[i][j - 1], data[i][j]];
+                mc++;
               }
             }
           }
@@ -206,7 +206,8 @@ function move (direction) {
       break;
   }
 
-  addCard();
+  if (mc) addCard();
+
   refresh();
 
   document.getElementById('hide').style.display = 'none';

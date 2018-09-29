@@ -60,13 +60,14 @@ function addCard () {
     data[emptyCards[index][0]][emptyCards[index][1]] = value;
   }
 
-  if (emptyCards.length === 1 && isGameover()) {
-    window.alert('游戏结束');
-    return;
-  }
-
   // 刷新
   refresh();
+
+  if (emptyCards.length === 1 && isGameover()) {
+    setTimeout(function () {
+      window.alert('游戏结束');
+    }, 0);
+  }
 }
 
 // 游戏结束检测
@@ -120,22 +121,22 @@ function move (direction) {
       // 向下滑动
       for (let j = 0; j < n; j++) {
         for (let s = 0; s < n - 1; s++) {
-          for (let i = 3; i >= 0; i--) {
+          for (let i = n - 1; i > 0; i--) {
             if (data[i][j] == 0) {
               if (data[i - 1][j] != 0) {
-                [data[i][j], data[i - 1][j]] = [data[i + 1][j], data[i][j]];
+                [data[i][j], data[i - 1][j]] = [data[i - 1][j], data[i][j]];
               }
             }
           }
         }
-        for (let i = 3; i > 0; i++) {
+        for (let i = n - 1; i > 0; i--) {
           if (data[i][j] == data[i - 1][j]) {
             data[i][j] *= 2;
             data[i - 1][j] = 0;
           }
         }
         for (let s = 0; s < n - 1; s++) {
-          for (let i = 3; i > 0; i++) {
+          for (let i = 3; i > 0; i--) {
             if (data[i][j] == 0) {
               if (data[i - 1][j] != 0) {
                 [data[i][j], data[i - 1][j]] = [data[i - 1][j], data[i][j]];
@@ -147,27 +148,27 @@ function move (direction) {
       break;
     case 4:
       // 向左滑动
-      for (let j = 0; j < n; j++) {
+      for (let i = 0; i < n; i++) {
         for (let s = 0; s < n - 1; s++) {
-          for (let i = 0; i < n - 1; i++) {
+          for (let j = 0; j < n - 1; j++) {
             if (data[i][j] == 0) {
-              if (data[i + 1][j] != 0) {
-                [data[i][j], data[i + 1][j]] = [data[i + 1][j], data[i][j]];
+              if (data[i][j + 1] != 0) {
+                [data[i][j], data[i][j + 1]] = [data[i][j + 1], data[i][j]];
               }
             }
           }
         }
-        for (let i = 0; i < n - 1; i++) {
-          if (data[i][j] == data[i + 1][j]) {
-            data[i][j] = 2 * data[i + 1][j];
-            data[i + 1][j] = 0;
+        for (let j = 0; j < n - 1; j++) {
+          if (data[i][j] == data[i][j + 1]) {
+            data[i][j] = 2 * data[i][j + 1];
+            data[i][j + 1] = 0;
           }
         }
         for (let s = 0; s < n - 1; s++) {
-          for (let i = 0; i < n - 1; i++) {
+          for (let j = 0; j < n - 1; j++) {
             if (data[i][j] == 0) {
-              if (data[i + 1][j] != 0) {
-                [data[i][j], data[i + 1][j]] = [data[i + 1][j], data[i][j]];
+              if (data[i][j + 1] != 0) {
+                [data[i][j], data[i][j + 1]] = [data[i][j + 1], data[i][j]];
               }
             }
           }
@@ -175,28 +176,28 @@ function move (direction) {
       }
       break;
     case 6:
-      // 向右滑动
-      for (let j = 0; j < n; j++) {
+      // 向右滑动(...)
+      for (let i = 0; i < n; i++) {
         for (let s = 0; s < n - 1; s++) {
-          for (let i = 0; i < n - 1; i++) {
+          for (let j = n - 1; j > 0; j--) {
             if (data[i][j] == 0) {
-              if (data[i + 1][j] != 0) {
-                [data[i][j], data[i + 1][j]] = [data[i + 1][j], data[i][j]];
+              if (data[i][j - 1] != 0) {
+                [data[i][j], data[i][j - 1]] = [data[i][j - 1], data[i][j]];
               }
             }
           }
         }
-        for (let i = 0; i < n - 1; i++) {
-          if (data[i][j] == data[i + 1][j]) {
-            data[i][j] = 2 * data[i + 1][j];
-            data[i + 1][j] = 0;
+        for (let j = n - 1; j > 0; j--) {
+          if (data[i][j] == data[i][j - 1]) {
+            data[i][j] *= 2;
+            data[i][j - 1] = 0;
           }
         }
         for (let s = 0; s < n - 1; s++) {
-          for (let i = 0; i < n - 1; i++) {
+          for (let j = n - 1; j > 0; j--) {
             if (data[i][j] == 0) {
-              if (data[i + 1][j] != 0) {
-                [data[i][j], data[i + 1][j]] = [data[i + 1][j], data[i][j]];
+              if (data[i][j - 1] != 0) {
+                [data[i][j], data[i][j - 1]] = [data[i][j - 1], data[i][j]];
               }
             }
           }
